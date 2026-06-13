@@ -8,10 +8,7 @@ public class Item {
     private String nombre;
     private String descripcion;
     private boolean disponible;
-
-    private Usuario usuarioActual;
     private Prestamo prestamoActual;
-
     private TipoItem tipo;
     private LinkedList<Categoria> categorias;
 
@@ -67,16 +64,12 @@ public class Item {
         this.tipo = tipo;
     }
 
-    public Usuario getUsuarioActual() {
-        return usuarioActual;
-    }
-
-    public void eliminarUsuarioActual() {
-        usuarioActual = null;
-    }
-
     public Prestamo getPrestamoActual() {
         return prestamoActual;
+    }
+
+    public void setPrestamoActual(Prestamo prestamoActual) {
+        this.prestamoActual = prestamoActual;
     }
 
     public void eliminarPrestamoActual() {
@@ -87,8 +80,16 @@ public class Item {
         return categorias;
     }
 
+    public void setCategorias(
+            LinkedList<Categoria> categorias) {
+
+        this.categorias = categorias;
+    }
+
     public void agregarCategoria(Categoria categoria) {
-        categorias.add(categoria);
+        if (!categorias.contains(categoria)) {
+            categorias.add(categoria);
+        }
     }
 
     public void eliminarCategoria(Categoria categoria) {
