@@ -9,7 +9,6 @@ public class Prestamo {
     private Date fechaPrestamo;
     private Date fechaDevolucion;
     private String estado;
-    private boolean retornado;
     private Date fechaRetorno;
 
     private Usuario usuario;
@@ -19,6 +18,14 @@ public class Prestamo {
 
     public Prestamo() {
         items = new LinkedList<>();
+        estado = "ACTIVO";
+    }
+
+    public Prestamo(int idPrestamo, Date fechaPrestamo, Date fechaDevolucion) {
+        this();
+        this.idPrestamo = idPrestamo;
+        this.fechaPrestamo = fechaPrestamo;
+        this.fechaDevolucion = fechaDevolucion;
     }
 
     public int getIdPrestamo() {
@@ -53,14 +60,6 @@ public class Prestamo {
         this.estado = estado;
     }
 
-    public boolean isRetornado() {
-        return retornado;
-    }
-
-    public void setRetornado(boolean retornado) {
-        this.retornado = retornado;
-    }
-
     public Date getFechaRetorno() {
         return fechaRetorno;
     }
@@ -85,30 +84,51 @@ public class Prestamo {
         this.items = items;
     }
 
-    public void agregarItem(Item item) {
-        items.add(item);
-        item.marcarPrestado();
-    }
-
-    public void removerItem(Item item) {
-        items.remove(item);
-        item.marcarDisponible();
-    }
-
-    public void finalizarPrestamo() {
-        retornado = true;
-        fechaRetorno = new Date();
-
-        for (Item item : items) {
-            item.marcarDisponible();
-        }
-    }
-
     public Alerta getAlerta() {
         return alerta;
     }
 
     public void setAlerta(Alerta alerta) {
         this.alerta = alerta;
+    }
+
+    public void agregarItem(Item item) {
+        if (item != null && !items.contains(item)) {
+            items.add(item);
+            item.setPrestamoActual(this);
+            item.marcarPrestado();
+        }
+    }
+
+    public void removerItem(Item item) {
+        if (item != null) {
+            items.remove(item);
+            item.eliminarPrestamoActual();
+            item.marcarDisponible();
+        }
+    }
+
+    public void finalizarPrestamo() {
+        estado = "FINALIZADO";
+        fechaRetorno = new Date();
+        for (Item item : items) {
+            item.eliminarPrestamoActual();
+            item.marcarDisponible();
+        }
+    }
+
+    public boolean estaActivo() {
+        return estado.equalsIgnoreCase("ACTIVO");
+    }
+
+    public boolean estaFinalizado() {
+        return estado.equalsIgnoreCase("FINALIZADO");
+    }
+
+    public boolean estaVencido() {
+        if (fechaDevolucion == null) {
+            return false;
+        }
+        return new Date().after(fechaDevolucion) && estado.equalsIgnoreCase("ACTIVO");
     }
 }
