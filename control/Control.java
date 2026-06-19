@@ -300,6 +300,40 @@ public class Control {
         return null;
     }
 
+        public String[][] datosPrestamosTabla() {
+        String[][] datos = new String[prestamos.size()][5];
+        int fila = 0;
+        for (Prestamo p : prestamos.values()) {
+            datos[fila][0] = String.valueOf(p.getIdPrestamo());
+            if (p.getUsuario() != null) {
+                datos[fila][1] = p.getUsuario().getNombre();
+            } else {
+                datos[fila][1] = "";
+            }
+            datos[fila][2] = p.getEstado();
+            datos[fila][3] = String.valueOf(p.getFechaPrestamo());
+            datos[fila][4] = String.valueOf(p.getFechaRetorno());
+            fila++;
+        }
+
+        return datos;
+    }
+    
+    public int cantidadUsuarios() {
+        return usuarios.size();
+    }
+
+    public int cantidadItems() {
+        return items.size();
+    }
+
+    public int cantidadPrestamos() {
+        return prestamos.size();
+    }
+
+    public int cantidadAlertas() {
+        return alertas.size();
+    }
 
     private boolean validarCorreo(String correo) {
         return correo.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
