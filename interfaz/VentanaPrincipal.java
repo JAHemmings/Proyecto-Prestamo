@@ -1,15 +1,15 @@
 package interfaz;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.Font;
 import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -17,22 +17,21 @@ public class VentanaPrincipal extends JFrame {
     private JPanel contentPane;
 
     public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    VentanaPrincipal frame = new VentanaPrincipal();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                VentanaPrincipal frame = new VentanaPrincipal();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
 
     public VentanaPrincipal() {
+
         setTitle("Sistema de Control de Préstamos");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 500, 500);
+        setBounds(100, 100, 500, 380);
         setLocationRelativeTo(null);
 
         contentPane = new JPanel();
@@ -47,60 +46,28 @@ public class VentanaPrincipal extends JFrame {
         lblTitulo.setBounds(20, 20, 445, 35);
         contentPane.add(lblTitulo);
 
-        JButton btnUsuarios = new JButton("Usuarios");
-        btnUsuarios.setBounds(145, 80, 180, 35);
-        contentPane.add(btnUsuarios);
-
-        JButton btnItems = new JButton("Items");
-        btnItems.setBounds(145, 130, 180, 35);
-        contentPane.add(btnItems);
+        JButton btnAdministracion = new JButton("Administración");
+        btnAdministracion.setBounds(145, 90, 180, 35);
+        contentPane.add(btnAdministracion);
 
         JButton btnPrestamos = new JButton("Préstamos");
-        btnPrestamos.setBounds(145, 180, 180, 35);
+        btnPrestamos.setBounds(145, 145, 180, 35);
         contentPane.add(btnPrestamos);
 
-        JButton btnTipos = new JButton("Tipos");
-        btnTipos.setBounds(145, 230, 180, 35);
-        contentPane.add(btnTipos);
-
-        JButton btnCategorias = new JButton("Categorías");
-        btnCategorias.setBounds(145, 280, 180, 35);
-        contentPane.add(btnCategorias);
-
-        JButton btnAlertas = new JButton("Alertas");
-        btnAlertas.setBounds(145, 330, 180, 35);
-        contentPane.add(btnAlertas);
+        JButton btnReportes = new JButton("Reportes");
+        btnReportes.setBounds(145, 200, 180, 35);
+        contentPane.add(btnReportes);
 
         JButton btnSalir = new JButton("Salir");
-        btnSalir.setBounds(145, 390, 180, 35);
+        btnSalir.setBounds(145, 255, 180, 35);
         contentPane.add(btnSalir);
 
-        btnUsuarios.addActionListener(e -> {
-            new VentanaUsuarios().setVisible(true);
-        });
+        btnAdministracion.addActionListener(e -> {new VentanaAdministracion().setVisible(true);});
 
-        btnItems.addActionListener(e -> {
-            new VentanaItems().setVisible(true);
-        });
+        btnPrestamos.addActionListener(e -> {new VentanaPrestamos().setVisible(true);});
 
-        btnPrestamos.addActionListener(e -> {
-            new VentanaPrestamos().setVisible(true);
-        });
+        btnReportes.addActionListener(e -> {new VentanaReportes().setVisible(true);});
 
-        btnTipos.addActionListener(e -> {
-            new VentanaTipos().setVisible(true);
-        });
-
-        btnCategorias.addActionListener(e -> {
-            new VentanaCategorias().setVisible(true);
-        });
-
-        btnAlertas.addActionListener(e -> {
-            new VentanaAlertas().setVisible(true);
-        });
-
-        btnSalir.addActionListener(e -> {
-            dispose();
-        });
+        btnSalir.addActionListener(e -> {dispose();});
     }
 }
